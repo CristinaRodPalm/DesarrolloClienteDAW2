@@ -1,68 +1,55 @@
 // Métodos
-app.service('concesionario', function() {
-    
-    this.coche = new Coche();
-    this.coche.crearCoche("opel", "corsa", "12000€");
-    
-    this.concesionarios = [];
-   
-    this.concesionario = new Concesionario();
+app.service('concesionario', function () {
 
+    this.concesionarios = [];
+    
     // Objeto coche
-    function Coche(){
+    function Coche() {
         this.modelo;
         this.precio;
         this.marca;
+        this.extras;
 
-        this.setModelo = function(modelo){ this.modelo = modelo; }
-        this.getModelo = function(){ return this.modelo; }
-        
-        this.setMarca = function(marca){ this.marca = marca; }
-        this.getMarca = function(){ return this.marca; }
-        
-        this.setPrecio = function(precio){ this.precio = precio; }
-        this.getPrecio = function(){ return this.precio; }   
-        
-        this.crearCoche = function(marca, modelo, precio){
-            this.marca = marca;
-            this.modelo = modelo;
-            this.precio = precio;
-        }
     }
     // Objeto concesionario
-    function Concesionario(){
+    function Concesionario() {
         this.nombre;
         this.direccion;
         this.comanda = [];
-        
-        this.getNombre = function(){ return this.nombre; }
-        this.setNombre = function(nombre){ this.nombre = nombre; }
-        
-        this.getDireccion = function(){ return this.direccion; }
-        this.setDireccion = function(direccion){ this.direccion = direccion; }
-        
-        this.crearConcesionario = function(nombre, direccion){
-            this.nombre = nombre;
-            this.direccion = direccion;
-            // le devolvemos el objeto que hemos creado
-            return this;
-        }
-        
-        this.addComanda = function(coche){
+
+        this.addComanda = function (coche) {
             this.comanda.push(coche);
-            var cantidad = this.comanda.length;
-            return cantidad;
-        }
-        this.getComanda = function(index){
-            return this.comanda[index];
-        }
-        this.getComandasLength = function(){
-            return this.comanda.length;
-        }
+        };
+    }
+
+    this.crearConcesionario = function (nombre, direccion) {
+        var aux = new Concesionario();
+        aux.nombre = nombre;
+        aux.direccion = direccion;
+        this.concesionarios.push(aux);
+        return aux;
+    }
+
+    this.crearCoche = function (marca, modelo, precio, extras) {
+        var coche = new Coche();
+        coche.modelo = modelo;
+        coche.precio = precio;
+        coche.marca = marca;
+        coche.extras = extras;
+        return coche;
     }
     
-    this.addConcesionarios = function(concesionario){
-        this.concesionarios.push(this.concesionarios.length+1, concesionario);
+    this.crearCocheConcesionario = function (numCon, marca, modelo, precio, extra){
+        var coche = new Coche();
+        coche.modelo = modelo;
+        coche.precio = precio;
+        coche.marca = marca;
+        coche.extras = extra;
+        this.concesionarios[numCon].addComanda(coche);
+    }
+
+    this.addComanda = function (numConcesionario, coche) {
+        this.concesionarios[numConcesionario].addComanda(coche);
     }
 
 });

@@ -1,46 +1,37 @@
-/*
-var app = angular.module('myApp', []);
-app.controller('nomControlador', ['$scope','miFactory',
-    function ($scope,miFactory) {
-        $scope.dishes1 =miFactory.getDishes();
-        
-        $scope.parInt=function(num){
-            return parseInt(num);
-        };
-        $scope.setBackgr=function(){
-            $scope.nomStyle="background-color";
-        }
-    }]);
- */
-
-
 // Para poner las cosas en scope
 
 var app = angular.module('appCoches', []);
 app.controller('controllerCoches', ['$scope', 'concesionario',
     function ($scope, concesionario) {
        
-        $scope.nombre = concesionario.coche.getModelo();
-        $scope.marca = concesionario.coche.getMarca();
+        $scope.concesionarios = concesionario.concesionarios;
         
-        c1 = concesionario.concesionario.crearConcesionario("paco", "calle florecilla");
-        $scope.c1 = c1;
-        c1.concesionario.getComandaLength();
-        //concesionario.addConcesionarios(c1);
+        //Creamos los concesionarios
+        $scope.concesionario1 = concesionario.crearConcesionario("paco", "calle florecilla");
+        $scope.concesionario2 = concesionario.crearConcesionario("pepe", "calle abejita");
+        $scope.concesionario3 = concesionario.crearConcesionario("lenteja", "calle perrico");
         
-        c2 = concesionario.concesionario.crearConcesionario("pepe", "calle abejita");
-        $scope.c2 = c2;
-        //concesionario.addConcesionarios(c2);
-
-        c3 = concesionario.concesionario.crearConcesionario("lenteja", "calle perrico");
-        $scope.c3 = c3;
-       // concesionario.addConcesionarios(c3);
+       
+        //Creamos los coches
+        $scope.coche1 = concesionario.crearCoche("opel", "corsa", "12000€", ["ok","ki"]);
+        $scope.coche2 = concesionario.crearCoche("opel1", "aaasd", "12000€", ["ex1", "ex2", "ex0"]);
+        $scope.coche3 = concesionario.crearCoche("apel", "uiouio", "12000€", ["extra1", "extra9"]);
         
-               
-       // $scope.comanda = concesionario.concesionarios[0];
-        //$scope.comanda1 = concesionario.concesionarios[1].getNombre();
-        //$scope.comanda2 = concesionario.concesionarios[2];
-  
-        
+        concesionario.addComanda(1, $scope.coche1);
+        concesionario.addComanda(0, $scope.coche2);
+        concesionario.addComanda(1, $scope.coche3);
+       
+       $scope.addCoche = function(){
+           $scope.extra = $scope.extras.split(", ");
+           concesionario.crearCocheConcesionario($scope.conSelect, $scope.marca, $scope.precio, $scope.modelo, $scope.extra);
+       }
+       
+       $scope.orden = true;
+       
+       $scope.ordenar = function(objeto){
+           $scope.objeto = objeto;
+           if($scope.orden === true) $scope.orden = false;
+           else $scope.orden = true;
+       }
     }
 ]);

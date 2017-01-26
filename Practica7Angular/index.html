@@ -13,14 +13,54 @@ and open the template in the editor.
         <script src="script/controller.js" type="text/javascript"></script>
         <script src="script/service.js" type="text/javascript"></script>
     </head>
-   
+
     <body ng-app="appCoches">
         <div ng-controller="controllerCoches">
-            comanda1 -> {{c1}} <br/>
-            comanda2 -> {{c2}} <br/>
-            comanda3 -> {{c3}} <br/>
+
+            Marca: <input type="text" ng-model="marca"/> </br>
+            Modelo: <input type="text" ng-model="modelo"/></br>
+            Precio: <input type="text" ng-model="precio" /></br>
+            Extras: <input type="text" ng-model="extras" /> </br>
+            <div ng-click="addCoche()">Crear coche</div>
             
+            </br></br></br>
+            
+            <table border="1">
+                <tr>
+                    <td>
+                        Nombre del concesionario: 
+                        <select ng-model="conSelect">
+                            <option ng-repeat="c in concesionarios" value={{$index}}>
+                                {{c.nombre}}
+                            </option>
+                        </select>
+                    </td>                    
+
+                    <td>Direccion del concesionario: {{concesionarios[conSelect].direccion}}</td>
+                </tr>
+                <tr>
+                    <td><center>PEDIDOS</center></td>
+                </tr>
+                <tr>
+                    <td ng-click="ordenar('marca')">Marca</td>
+                    <td ng-click="ordenar('modelo')">Modelo</td>
+                    <td ng-click="ordenar('precio')">Precio</td>
+                </tr>
+
+                <tr ng-repeat="coche in concesionarios[conSelect].comanda | orderBy:objeto:orden">
+                    <td>Marca: {{coche.marca}}</td>
+                    <td>Modelo: {{coche.modelo}}</td>
+                    <td>Precio: {{coche.precio}}</td>
+
+                    <td>
+                        <li ng-repeat="extra in coche.extras | orderBy:coche.extras:true">
+                            Extras: {{extra}}<br/>
+                        </li>
+                    </td>
+                </tr>
+
+            </table>    
         </div>
-        
+
     </body>
 </html>

@@ -17,10 +17,11 @@ and open the template in the editor.
     <body ng-app="appCoches">
         <div ng-controller="controllerCoches">
 
-            Marca: <input type="text" ng-model="marca"/> </br>
-            Modelo: <input type="text" ng-model="modelo"/></br>
-            Precio: <input type="text" ng-model="precio" /></br>
-            Extras: <input type="text" ng-model="extras" /> </br>
+            Marca: <input type="text" ng-model="marca"/><br/>
+            Modelo: <input type="text" ng-model="modelo"/><br/>
+            Precio: <input type="text" ng-model="precio" /><br/>
+            
+            Extras: <input type="text" ng-model="extras" /> <br/>
             <div ng-click="addCoche()">Crear coche</div>
             
             </br></br></br>
@@ -36,21 +37,22 @@ and open the template in the editor.
                         </select>
                     </td>                    
 
-                    <td>Direccion del concesionario: {{concesionarios[conSelect].direccion}}</td>
+                    <td colspan="3">Direccion del concesionario: {{concesionarios[conSelect].direccion}}</td>
                 </tr>
                 <tr>
-                    <td><center>PEDIDOS</center></td>
+                    <td colspan="4"><center><strong>PEDIDOS</strong></center></td>
                 </tr>
                 <tr>
-                    <td ng-click="ordenar('marca')">Marca</td>
-                    <td ng-click="ordenar('modelo')">Modelo</td>
-                    <td ng-click="ordenar('precio')">Precio</td>
+                    <td ng-click="ordenar('marca')"><strong>Marca</strong></td>
+                    <td ng-click="ordenar('modelo')"><strong>Modelo</strong></td>
+                    <td ng-click="ordenar('precio')"><strong>Precio</strong></td>
+                    <td><strong>Extras</strong></td>
                 </tr>
 
                 <tr ng-repeat="coche in concesionarios[conSelect].comanda | orderBy:objeto:orden">
-                    <td>Marca: {{coche.marca}}</td>
-                    <td>Modelo: {{coche.modelo}}</td>
-                    <td>Precio: {{coche.precio}}</td>
+                    <td>{{coche.marca}}</td>
+                    <td>{{coche.modelo}}</td>
+                    <td>{{coche.precio}}</td>
 
                     <td>
                         <li ng-repeat="extra in coche.extras | orderBy:coche.extras:true">

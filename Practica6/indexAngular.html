@@ -11,32 +11,48 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>      
+        
+        <style>
+            .odd{background-color: #d6d6d6}
+            .even{background-color: #809fff}
+            .negative{background-color: red}
+            .positive{background-color: green}
+        </style>
     </head>
     <body>
         <div ng-app="app" ng-controller="controller" 
              class="container col-lg-12 row-lg-12">
             
             <div class="row-lg-12 col-lg-12">
-                <div ng-repeat="numero in arrayNumeros">{{numero}}</div>
+                <div ng-repeat="numero in arrayNumeros">
+                    <span ng-class-odd="'odd'" ng-class-even="'even'">
+                        {{numero}} 
+                    </span>
+                </div>
             </div>
-
             
-            <div class="btn btn-info col-lg-1" ng-click="primerUltimoNumero()">Primer y último número</div>
-            <div class="btn btn-info col-lg-1" ng-click="addNumeroFinal()">Añadir número al final</div>
-            <div class="btn btn-info col-lg-1" ng-click="addNumeroInicio()">Añadir número al inicio</div>
-
+            <div class="row">
+                <div class="btn btn-info col-lg-2" ng-click="primerUltimoNumero()">Primer y último número</div>
+                <div class="btn btn-info col-lg-2" ng-click="addNumeroFinal()">Añadir número al final</div>
+                <div class="btn btn-info col-lg-2" ng-click="addNumeroInicio()">Añadir número al inicio</div>
+            </div>
             
-            <div class="btn btn-info col-lg-1" ng-click="deleteNumeroFinal()">Borrar último número</div>
-            <div class="btn btn-info col-lg-1" ng-click="deleteNumeroInicio()">Borrar primer número</div>
-            <div class="btn btn-info col-lg-1" ng-click="calcular()">Calcular</div>
-
+            <div class="row">
+                <div class="btn btn-info col-lg-2" ng-click="deleteNumeroFinal()">Borrar último número</div>
+                <div class="btn btn-info col-lg-2" ng-click="deleteNumeroInicio()">Borrar primer número</div>
+                <div class="btn btn-info col-lg-2" ng-click="calcular()">Calcular</div>
+            </div>
             
-            <div class="btn btn-info col-lg-1" ng-click="borrarPosicion()">Borrar posición concreta</div>
-            <div class="btn btn-info col-lg-1" ng-click="borrarNumero()">Borrar número concreto</div>
-
+            <div class="row">
+                 <div class="btn btn-info col-lg-2" ng-click="borrarPosicion()">Borrar posición concreta</div>
+                <div class="btn btn-info col-lg-2" ng-click="borrarNumero()">Borrar número concreto</div>
+            </div>
+           
+            
             <div>
                 {{resultado}}
             </div>
+            
             
         </div>
     </body>

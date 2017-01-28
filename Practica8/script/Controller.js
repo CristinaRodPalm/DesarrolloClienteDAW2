@@ -2,6 +2,8 @@
 var app = angular.module('appEquipos', []);
 app.controller('controller', ['$scope', 'service',
     function ($scope, service) {
+        
+        $scope.algo = "algo";
 
         $scope.equipo1 = service.crearEquipo("equipo1", -1, 2, "petanca");
         $scope.equipo2 = service.crearEquipo("equipo2", 9, 3, "basket");

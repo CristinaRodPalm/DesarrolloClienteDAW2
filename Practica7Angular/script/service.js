@@ -8,7 +8,7 @@ app.service('concesionario', function () {
         this.modelo;
         this.precio;
         this.marca;
-        this.extras;
+        this.extras = [];
 
     }
     // Objeto concesionario
@@ -44,6 +44,7 @@ app.service('concesionario', function () {
         coche.modelo = modelo;
         coche.precio = precio;
         coche.marca = marca;
+        
         coche.extras = extra;
         this.concesionarios[numCon].addComanda(coche);
     }

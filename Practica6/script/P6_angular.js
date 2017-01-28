@@ -1,24 +1,21 @@
-var arrayNumeros = new Array();
-
-function generarNumeros(){
-    for(var i = 0; i < 5; i++){
-        arrayNumeros[i]= Math.floor((Math.random() * 10) + 1);
-    }
-}
-
 angular.module('app', [])
         .controller('controller', ['$scope', function ($scope) {
-                generarNumeros();
+                var arrayNumeros = [];
+                var numero;
+        
+                for(var i = 0; i < 5; i++){
+                    arrayNumeros[i]= Math.floor((Math.random() * 10) + 1);
+                }
+
                 $scope.arrayNumeros = arrayNumeros;
                 $scope.primero = "";
                 $scope.ultimo = "";
                 $scope.resultado = "";
-                var primero = arrayNumeros[0];
-                var ultimo = arrayNumeros[arrayNumeros.length - 1];
-
+                
                 $scope.primerUltimoNumero = function () {
-                    $scope.primero = primero;
-                    $scope.ultimo = ultimo;
+                    $scope.primero = arrayNumeros[0];
+                    $scope.ultimo = arrayNumeros[arrayNumeros.length - 1];
+                    $scope.resultado = $scope.primero+", "+$scope.ultimo;
                 }
                 
                 $scope.calcular = function () {
@@ -29,7 +26,7 @@ angular.module('app', [])
                     } while (!isNaN(operador) || operador === null || operador === "");
                     
                     for(var i = 0; i < 5; i++){
-                        resultado += numero[i];
+                        resultado += arrayNumeros[i];
                         if(i!=4) resultado += operador;
                     }
                     var total = eval(resultado);
@@ -55,7 +52,7 @@ angular.module('app', [])
                 }
 
                 $scope.deleteNumeroInicio = function () {
-                    numeros.shift();
+                    arrayNumeros.shift();
                 }
 
                 $scope.borrarPosicion = function () {
@@ -73,11 +70,10 @@ angular.module('app', [])
                     do {
                         numero = window.prompt("Introduce el número:");
                     } while (isNaN(numero) || numero == null || numero == "");
-                    var index = arrayNumeros.indexOf(numero);
-                    if (index > -1) {
-                        arrayNumeros.splice(index, 1);
+                    
+                    for(var i = 0; i < arrayNumeros.length; i++){
+                        if(numero == arrayNumeros[i]) arrayNumeros.splice(i, 1);
                     }
-                    else alert("Número no encontrado."); 
                 }
                 
             }]);

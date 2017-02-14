@@ -22,14 +22,27 @@ app.controller('controller', ['$scope', 'service',
 
         }
         $scope.crearEquipo = function () {
-            service.crearEquipo($scope.nombreEq, $scope.victoria, $scope.derrotas, $scope.juego);
+            var nombreRepetido = false;
+            for(var i = 0; i <$scope.equipos.length; i++){
+                var nombreEquipo = $scope.equipos[i].nombre;
+                if(nombreEquipo === $scope.nombreEq) nombreRepetido = true;
+            }
+            if(!nombreRepetido) service.crearEquipo($scope.nombreEq, $scope.victoria, $scope.derrotas, $scope.juego);
+            else console.log("Nombre de equipo repetido");
         }
         $scope.crearJugador = function (equipoSel) {
-            service.crearJugadorEquipo(equipoSel, $scope.nick, $scope.nombreJug, $scope.funcion, $scope.puntos);
+            var editar = false;
+            for(var i = 0; i <$scope.equipos[equipoSel].jugadores.length; i++){
+                var jugador = $scope.equipos[equipoSel].jugadores[i];
+                    if(jugador.nick === $scope.nick) editar = true;
+            }
+            if(editar){
+                service.updateJugador(equipoSel, $scope.nick, $scope.nombreJug, $scope.funcion, $scope.puntos);
+            }else{
+                service.crearJugadorEquipo(equipoSel, $scope.nick, $scope.nombreJug, $scope.funcion, $scope.puntos);
+            }
         }
-        $scope.editarJugador = function (equipoSel) {
-            service.updateJugador(equipoSel, $scope.nick, $scope.nombreJug, $scope.funcion, $scope.puntos);
-        }
+        
         $scope.llenarFormulario = function (equipo, jugador) {
             $scope.jugador = $scope.equipos[equipo].jugadores[jugador];
 

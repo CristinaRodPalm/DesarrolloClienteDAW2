@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Práctica 8 angular</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/ico" href="copa.png"/>
+        
+        <script src="script/angular.min.js" type="text/javascript"></script>
+        <script src="script/Controller.js" type="text/javascript"></script>
+        <script src="script/Service.js" type="text/javascript"></script>
+        <script src="script/jquery-3.1.1.js" type="text/javascript"></script>
+        <script src="script/JavasCript.js" type="text/javascript"></script>
+        
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>      
+        
+    </head>
+    <body ng-app="appEquipos" ng-controller="controller">
+        <div class="container">
+            <!-- TABLA CREACIÓN -->
+            
+            <table class="table table-bordered">
+                <tbody>
+                    <tr><td colspan="5" style="text-align:center"><strong>CREAR EQUIPO</strong></td></tr>
+                    <tr>
+                        <td><strong>Nombre </strong><input type="text" ng-model="nombreEq"/> </td>
+                        <td><strong>Victorias </strong><input type="text" ng-model="victorias"/> </td>
+                        <td><strong>Derrotas </strong><input type="text" ng-model="derrotas"/> </td>
+                        <td><strong>Tipo de juego </strong><input type="text" ng-model="juego"/> </td>
+                        <td><button ng-click="crearEquipo()"/>Crear</td>
+                    </tr>
+                    <tr><td colspan="5" style="text-align:center"><strong>CREAR JUGADOR</strong></td></tr>
+                    <tr>
+                        <td>
+                            <strong>Jugador </strong>
+                            <input type="text" ng-model="nombreJug"/> 
+                        </td>
+                        <td>
+                            <strong>Puntos </strong>
+                            <input type="text" ng-model="puntos"/>  
+                        </td>
+                        <td>
+                            <strong>Nick </strong>
+                            <input type="text" ng-model="nick"/> 
+                        </td>
+                        <td>
+                            <strong>Función </strong>
+                            <input type="text" ng-model="funcion"/> 
+                        </td>
+                        <td>
+                            <strong>Minutos jugados </strong>
+                            <input type="text" ng-model="minutos"/> 
+                        </td>
+                        <td>
+                            <button ng-click="crearJugador(equipoS)"/>Crear / Editar<br/>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+           
+            <!-- TABLA BUSCADOR -->
+            <table class="table table-bordered">
+               <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <strong>Nombre equipo</strong> 
+                             <select ng-model="equipoS">
+                                <option ng-repeat="equipo in equipos" value={{$index}}>
+                                    {{equipo.nombre}}
+                                </option>
+                            </select>
+                        </td>
+                        <td colspan="2">
+                            <strong>Victorias</strong> {{equipos[equipoS].victorias}} <br/>
+                            <strong>Derrotas</strong> {{equipos[equipoS].derrotas}}
+                        </td>
+                        <td colspan="2">
+                            <strong>Tipo de juego</strong> {{equipos[equipoS].juego}} <br/>
+                            
+                            <div ng-repeat="jugador in equipos[equipoS].jugadores | orderBy:puntos | limitTo:1">
+                                <strong>Jugador + puntos</strong> {{jugador.nombre}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"></td></tr>
+                    
+                    <!-- tabla de los jugadores -->
+                    <tr>
+                        <td ng-click="ordenar('nick')"><strong>Nick</strong></td>
+                        <td ng-click="ordenar('nombre')"><strong>Nombre</strong></td>
+                        <td ng-click="ordenar('puntos')"><strong>Puntos</strong></td>
+                        <td ng-click="ordenar('funcion')"><strong>Función principal</strong></td>
+                        <td ng-click="ordenar('minutos')"><strong>Minutos jugados</strong></td>
+                        <td></td> 
+                    </tr>
+                    <tr ng-repeat="jugador in equipos[equipoS].jugadores | orderBy:objeto:orden track by $index ">
+                        <td ng-click="llenarFormulario(equipoS, $index)">{{jugador.nick}}</td>
+                        <td>{{jugador.nombre}}</td> 
+                        <td>{{jugador.puntos}}</td>
+                        <td>{{jugador.funcion}}</td>
+                        <td>{{jugador.minutosJugados}}</td>
+                        <td ng-click="eliminar(equipoS, $index)" style="color:red">Elimina</td>
+                    </tr>
+                </tbody>
+                
+                
+            </table>
+        </div>
+
+        <button id="ejecutar">
+            Ejecuta examen
+        </button>
+        <button id="pedir">
+            Borrar campeonato
+        </button>
+        
+        <div id="infoCampeonatos">
+            
+        </div>
+    </body>
+
+</html>
+

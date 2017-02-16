@@ -17,7 +17,7 @@ if (isset($_GET['inicio'])) {     //se ha indicado iniciar un nuevo juego
 
     if ($numeroUsuario > $numeroOculto) {
         $xml .= "<encontrado>no</encontrado>" . "\n";
-        $xml .= "<mensaje>Has introducido un valor demasiado alto" . "s</mensaje>" . "\n";
+        $xml .= "<mensaje>Has introducido un valor demasiado alto" . "</mensaje>" . "\n";
     } else {
         if ($numeroUsuario < $numeroOculto) {
             $xml .= "<encontrado>no</encontrado>" . "\n";

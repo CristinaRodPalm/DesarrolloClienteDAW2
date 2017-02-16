@@ -5,6 +5,7 @@ $(document).ready(function(){
    $("#checkAjaxJSON").click(comprobarNumUsuarioJSON);
     
 });
+var marcador = 10;
 
 function numeroAleatorio(){
     var xmlHttp = new XMLHttpRequest();
@@ -57,6 +58,10 @@ function verificarNumero(xmlHttp){
         document.getElementById("mensaje").innerHTML = mensaje;
         if(encontrado === "si"){
             document.getElementById("encontrado").innerHTML = encontrado;
+        }else{
+            marcador = marcador-1;
+            document.getElementById("marcador").innerHTML = marcador;
+            consultarMarcador();
         }
     }
 }
@@ -116,6 +121,21 @@ function verificarNumeroJSON(xmlHttp){
         document.getElementById("mensaje").innerHTML = mensaje;
         if(encontrado === "si"){
             document.getElementById("encontrado").innerHTML = encontrado;
+        }else{
+            marcador = marcador -1;
+            document.getElementById("marcador").innerHTML = marcador;
+            consultarMarcador();
         }
+    }
+}
+function consultarMarcador(){
+    if(marcador < 0){
+        document.getElementById("resultado").innerHTML = "Has perdido";
+        $("#inicioXML").attr("disabled", "disabled").off('click');
+        $("#checkAjaxXML").attr("disabled", "disabled").off('click');
+        $("#inicioJSON").attr("disabled", "disabled").off('click');
+        $("#checkAjaxJSON").attr("disabled", "disabled").off('click');
+        
+        document.getElementById("marcador").innerHTML = "0";
     }
 }

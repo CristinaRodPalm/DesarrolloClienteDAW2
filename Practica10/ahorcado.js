@@ -4,6 +4,7 @@ app.controller('controlador', ['$scope', '$http',
         
         var palabraEscondida = "";
         var palabra = "";
+        var intentos = 4;
         
         $scope.getLongPalabra = function(){
             $http.get("palabras.php").then(
@@ -64,7 +65,31 @@ app.controller('controlador', ['$scope', '$http',
                 }
             }
             if(contador == $scope.palabra.length){
-                alert("HAS GANADO!!");
+                alert("HAS GANADO!! Intentos restantes: "+intentos+" de 4");
+            }else if(contador == 0){
+                intentos--;
+                
+                var source = document.getElementById('imagen').src;
+                console.log(source);
+                var ruta1 = "http://localhost:8080/ProyDAW2/Practica10/img/f1.png";
+                var ruta2 = "http://localhost:8080/ProyDAW2/Practica10/img/f2.png";
+                var ruta3 = "http://localhost:8080/ProyDAW2/Practica10/img/f3.png";
+                var ruta4 = "http://localhost:8080/ProyDAW2/Practica10/img/fallo.png";
+                switch(source){
+                    case ruta1: 
+                        document.getElementById('imagen').src = ruta2;
+                        break;
+                    case ruta2: 
+                        document.getElementById('imagen').src = ruta3;
+                        break;
+                    case ruta3: 
+                        document.getElementById('imagen').src = ruta4;
+                        alert("HAS PERDIDO!!! Intentos restantes: "+contador+" de 4"); 
+                        break;
+                    default: document.getElementById('imagen').src = ruta1; 
+                        break;
+                }
+                
             }
             console.log(palabraOK);
         }

@@ -6,6 +6,7 @@
     $index = 0;
     $arrayPosiciones = array();
     $respuesta = '{';
+   
     
     if(isset($_GET["letra"])){
         $letraUsu = $_GET["letra"];
@@ -18,24 +19,20 @@
             }
             $index++;
         }
-        $long = sizeof($arrayPosiciones);
-        $index = 1;
-        foreach($arrayPosiciones as $posicion){
-            if($index == $long){
-                $respuesta .= '"iguales":"'.$posicion.'"';
-            }else{
-                $respuesta .= '"iguales":"'.$posicion.'", ';
-            }
-                
-            $index++;
-        }
+        $respuesta .= '"cantidad":"'.  sizeof($arrayPosiciones).'", ';
+        
+        $json = json_encode($arrayPosiciones);
+        
+        $respuesta .= '"arrayPosiciones":"'.$json.'"';
+        
+        
     }else{
         shuffle($palabras);
         $_SESSION["palabraSelect"] = $palabras[0];
+        
+        $respuesta .= '"cantidad":"'. strlen($palabras[0]).'", ';
 
         $respuesta .= '"palabra":"'.$_SESSION["palabraSelect"].'"';
-        
-
     }
     
     

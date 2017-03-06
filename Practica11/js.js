@@ -75,24 +75,58 @@ function inicio(){
     /* Al hacer click en #replaceMeForFirst creamos un div,
      * añadimos el texto y la clase #replaceMeForFirst
      * lo añadimos a #domNodes
-     * Al hacer click se pone el primereo de #domNodes
+     * Al hacer click se pone el primero de #domNodes
      */
     var replaceMeForFirst = document.getElementById("replaceMeForFirst");
     replaceMeForFirst.addEventListener("click", replaceFirst, false);
+    
+    //1.9
+    /* Al mover el ratón encima de un nodo de la clase .replaceMeForFirst
+     * Mostramos en el nodo la posición X e Y de éste
+     */
+    
+    //2.10. Al clicar el numero 1 se elimine el primer elemento dentro de #domNodes
+    //2.11. Al clicar el número 2 se elimine el último elemento dentro de #domNodes
+    document.onkeydown = remove;
 };
+
+function remove(event){
+    var char = String.fromCharCode(event.keyCode);
+    var nodes = document.getElementById("domNodes");
+    if(char == 1){
+        nodes.removeChild(nodes.firstChild);
+    }else if(char == 2){
+        nodes.removeChild(nodes.lastChild);
+    }
+}
+
+//1.9
+function showXY(){
+    var pos = this.getBoundingClientRect();
+    var x = pos.right;
+    var y = pos.top;
+    this.innerHTML = x.toFixed(2)+", "+y.toFixed(2);
+}
 
 //1.8
 function replaceFirst(){
     var newDiv = document.createElement("div");
     newDiv.className = "replaceMeForFirst";
     newDiv.innerHTML = window.prompt("Introduce un texto");
-    newDiv.className = "replaceMeForFirst";
+    newDiv.id = "replaceFirst";
     var nodes = document.getElementById("domNodes");
     nodes.appendChild(newDiv);
     newDiv.addEventListener("click", replaceMeForFirst, false);
+    //1.9 -> Al mover el ratón en un nodo de clase .replaceMeForFirst 
+    // mostramos el valor de X e Y en el nodo
+    newDiv.addEventListener("mouseover", showXY, false);
 }
 function replaceMeForFirst(){
     // debes ponerlo el primero
+    var divReplace = document.getElementById("replaceFirst");
+    var nodes = document.getElementById("domNodes");
+    var divFirst = nodes.firstChild;
+    nodes.insertBefore(divReplace, divFirst);
 }
 
 //1.7

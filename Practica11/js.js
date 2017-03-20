@@ -139,6 +139,7 @@ function deleteAllType(){
     nodes.appendChild(newDiv);
     newDiv.addEventListener("click", delAllType, false);
 }
+// SIN ACABAR
 function delAllType(){
     var tipo = window.prompt("Introduce el nombre del tipo de dato a eliminar");
     

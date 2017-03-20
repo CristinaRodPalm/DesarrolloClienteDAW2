@@ -1,20 +1,27 @@
 var app = angular.module('appPkm', ['ngResource']);
 app.controller('controllerPkm', ['$scope', 'servicePkm',
     function ($scope, servicePkm) {
+        // GET ID BULBASUR
         servicePkm.consultaAjax().get({id: "Bulbasaur"}).$promise.then(
-            //funciona
             function(response){
                 console.log(response);
-                $scope.nombre = response.nombre;
-                $scope.nick = response.nick;
-                $scope.tipo = response.tipo;
             },
-            //error
             function(response){
                 console.log("ERROR");
             }
         );
-        servicePkm.consultaAjax().get().$promise.then(
+        // GET ID PLANTI
+        servicePkm.consultaAjax().get({id: "planti"}).$promise.then(
+            function(response){
+                console.log(response);
+            },
+            function(response){
+                console.log("ERROR");
+            }
+        );
+
+        // GET ALL
+        /*servicePkm.consultaAjax().get().$promise.then(
             function(response){
                 console.log(response);
                 $scope.pokemon = response;
@@ -22,10 +29,18 @@ app.controller('controllerPkm', ['$scope', 'servicePkm',
             function(response){
                 console.log(response);
             }
-        );
-
-        $scope.getPlanta = function () {
-            servicePkm.consultaAjax().get();
-        }
+        );*/
+        
+        var newPokemon = {nombre: 'pikachu', nick: 'pika', evolucion: 'raichu', tipo: ''};
+        servicePkm.consultaAjax().save(newPokemon).$promise.then(    
+            function (response) {       
+                console.log(response);
+                $scope.pokemon = response;
+            },
+            function (response) {
+                $scope.messError= "Error: " + response.status + " " + response.statusText;
+         });
+         
+       
     }
 ]);

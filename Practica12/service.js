@@ -2,7 +2,7 @@
 app.service('servicePkm', ['$resource', function ($resource) {
 
         this.consultaAjax = function () {
-            return $resource('crud.php/pokem/:id/:nick/:tipo', null, {
+            return $resource('crud.php/pokem/:id/:nick', null, {
                 'get': {method:'GET'},
                 'save': {method:'POST'},
                 'query': {method:'GET', isArray:true},

@@ -6,8 +6,6 @@ window.onload = function(){
     document.getElementById("respuestas")
             .addEventListener("click", checkRespuesta, false);
     
-   
-    
     document.getElementById("pista").style.visibility = "hidden";
     document.getElementById("pregunta").style.visibility = "hidden";
     document.getElementById("respuestas").style.visibility = "hidden";
@@ -63,7 +61,7 @@ function ajaxRutaImagen(){
         
             var ruta = respuestaJSON.ruta;
             console.log(ruta);
-            var img = "<img id='img' src='"+ruta+"'/>";
+            var img = "<img id='img' src='../img/"+ruta+"'/>";
             var divImagen = document.getElementById("imagen");
             divImagen.addEventListener("mouseover", ajaxPista, false);
             divImagen.addEventListener("mouseout", ajaxPregunta, false);

@@ -48,15 +48,24 @@ app.controller('controlador', ['$scope', '$http',
             });
         }
         $scope.checkRespuesta = function(value){
+            $scope.disabled = false;
             $http.get("ajax.php?respuesta="+value+"").then(
             function(response){
-                $scope.si = "";
-                if(response.data.respuesta === "acertado"){
-                    console.log("ok");
-                    $("#si").css("color", "green");
-                }else{
-                    $("#si").css("color", "red");
+                var pos = response.data.posicion;
+                var respuesta = response.data.respuesta;
+                if(respuesta === "acertado"){
+                    $("#"+value).css("color", "#7CFC00");
+                }else if(respuesta == "fallado"){
+                    $("#"+value).css("color", "red");
+                    /*if(pos == "si"){
+                        $("#no").css("color", "#7CFC00");
+                        $("#si").css("color", "red"); 
+                    }else if(pos == "no"){
+                       $("#si").css("color", "#7CFC00");
+                       $("#no").css("color", "red");
+                    }*/
                 }
+                $scope.disabled = true;
             },
             function(response){
                 $scope.message = "Error:" + response.status +

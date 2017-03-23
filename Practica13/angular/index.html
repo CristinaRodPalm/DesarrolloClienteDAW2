@@ -42,8 +42,11 @@
             
             <!--respuestas-->
             <strong id="respuestasLbl">Respuestas: </strong>
-            <div class="respuestas" id="si" ng-click="checkRespuesta('si')">Si</div>
-            <div class="respuestas" id="no" ng-click="checkRespuesta('no')">No</div>
+            <div class="respuestas">
+                {{pos}}{{respuesta}}
+                <div class="respuestas" id="si" ng-click="disabled||checkRespuesta('si')">Si</div>
+                <div class="respuestas" id="no" ng-click="disabled||checkRespuesta('no')">No</div>
+            </div>
         </div>
     </body>
 </html>

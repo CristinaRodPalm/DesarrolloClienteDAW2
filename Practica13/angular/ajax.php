@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $_SESSION["posicion"] = 0;
+    
 
     $imgRetos = array("retoMental.png", "retoMental2.jpg");
     $respRetos = array("si", "no");
@@ -18,8 +18,12 @@
          $respuesta .= '"pista" : "Fíjate bien si son iguales..."';
     }else if(isset($_GET["respuesta"])){
         if($respRetos[$_SESSION["posicion"]] == $_GET["respuesta"]){
-            $respuesta .= '"respuesta" : "acertado"';
-        }
+            
+            $respuesta .= '"respuesta" : "acertado",';
+        }else{
+            $respuesta .= '"respuesta" : "fallado",';
+       }
+        $respuesta .= '"posicion" : "'.$_GET["respuesta"].'"';
     }
     
     $respuesta .= '}';

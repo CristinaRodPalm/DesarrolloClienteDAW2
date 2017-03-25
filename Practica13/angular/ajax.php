@@ -1,7 +1,6 @@
 <?php
     session_start();
     
-
     $imgRetos = array("retoMental.png", "retoMental2.jpg");
     $respRetos = array("si", "no");
     
@@ -30,4 +29,3 @@
     
     echo $respuesta;
 ?>
-

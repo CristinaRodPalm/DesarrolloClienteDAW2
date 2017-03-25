@@ -1,12 +1,49 @@
 // controller
-var app = angular.module('retoMental', []);
-app.controller('controlador', ['$scope', '$http',
-    function ($scope, $http) {
+app = angular.module('retoMental', ['ngResource']);
+app.controller('controlador', ['$scope', 'service', '$http', 
+    function ($scope, service, $http) {
         $("#pistaLbl").hide();
         $("#preguntaLbl").hide();
         $("#respuestasLbl").hide();
         $(".respuestas").hide();
+        $("#hide").hide();
+        $("#ranking").hide();
+        
+        $scope.getUserInfo = function(id){
+            console.log("info "+id);
+        }
+        
+        $scope.getRanking = function(){
+            $("#ranking").show();
+            $("#hide").show();
+            $("#showRanking").hide();
+            $scope.show = true;
+            $scope.noshow = false;
+            service.consultaAjax().get({nick: $scope.nick, edad:$scope.edad}).$promise.then(
+                    function(response){
+                        console.log(response);
+                        $scope.ranking = response;
+                    }, function(response){
+                        alert("Ha habido un error al recibir los usuarios");
+                    }
+            );
+        }
+        $scope.hideRanking = function(){
+            $("#ranking").hide();
+            $("#showRanking").show();
+            $("#hide").hide();
+        }
         $scope.getImagen = function(){
+            service.consultaAjax().get({nick: $scope.nick, edad:$scope.edad, puntuacion:0}).$promise.then(
+                    function(response){
+                        $("#login").hide();
+                        console.log(response);
+                    }, function (response){
+                        alert("Ha habido un error con el login, intenta volver a acceder!!");
+                    }
+            );
+            
+            
             $http.get("ajax.php?ruta=si").then(
             function(response){
                 $scope.ruta = "../img/"+response.data.ruta; 
@@ -57,13 +94,6 @@ app.controller('controlador', ['$scope', '$http',
                     $("#"+value).css("color", "#7CFC00");
                 }else if(respuesta == "fallado"){
                     $("#"+value).css("color", "red");
-                    /*if(pos == "si"){
-                        $("#no").css("color", "#7CFC00");
-                        $("#si").css("color", "red"); 
-                    }else if(pos == "no"){
-                       $("#si").css("color", "#7CFC00");
-                       $("#no").css("color", "red");
-                    }*/
                 }
                 $scope.disabled = true;
             },

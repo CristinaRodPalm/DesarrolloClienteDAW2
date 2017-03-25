@@ -1,10 +1,7 @@
-angular.module('retoMental')
-        .service('serv', ['$http', function ($http) {
-                /*this.getMessage = function () {
-                    return $http.get("ajax.php");
-                };
-                this.getRuta = function(){
-                    return $http.get("ajax.php");
-                }*/
-            }]);
-
+app.service('service',['$resource', function ($resource) {
+    this.consultaAjax = function () {
+        return $resource("ranking.php/usuaris/:nick/:edad/:puntuacion", null,{
+            'update': {method: 'PUT'}
+        });
+    };
+}]);

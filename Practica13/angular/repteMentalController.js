@@ -8,18 +8,32 @@ app.controller('controlador', ['$scope', 'service', '$http',
         $(".respuestas").hide();
         $("#hide").hide();
         $("#ranking").hide();
-        
-        $scope.getUserInfo = function(id){
-            console.log("info "+id);
+        $("#infoUser").hide();
+       
+        $scope.getUserInfo = function(nickRanking, posicion){
+           service.consultaAjax().get({aux: "byuser", nick: nickRanking}).$promise.then(
+                    function(response){
+                        if(posicion == "form"){
+                            $scope.nick = response.nick;
+                            $scope.edad = response.edad;
+                        }else if(posicion = "info"){
+                            $scope.nickInfo = response.nick;
+                            $scope.edadInfo = response.edad;
+                            $scope.puntuacionInfo = response.puntuacion;
+                        }
+                        
+                    }, function(response){
+                        alert("Ha habido un error al recibir los usuarios");
+                    }
+            );
         }
-        
         $scope.getRanking = function(){
             $("#ranking").show();
             $("#hide").show();
             $("#showRanking").hide();
             $scope.show = true;
             $scope.noshow = false;
-            service.consultaAjax().get({nick: $scope.nick, edad:$scope.edad}).$promise.then(
+            service.consultaAjax().get().$promise.then(
                     function(response){
                         console.log(response);
                         $scope.ranking = response;
@@ -34,26 +48,30 @@ app.controller('controlador', ['$scope', 'service', '$http',
             $("#hide").hide();
         }
         $scope.getImagen = function(){
-            service.consultaAjax().get({nick: $scope.nick, edad:$scope.edad, puntuacion:0}).$promise.then(
+            if(($scope.nick == undefined && $scope.edad == undefined) || isNaN($scope.edad)){
+                alert("No puedes empezar a jugar si no te registras");
+            }else{
+                $("#infoUser").show();
+                service.consultaAjax().get({aux: "login", nick: $scope.nick, edad:$scope.edad, puntuacion:0}).$promise.then(
                     function(response){
                         $("#login").hide();
                         console.log(response);
                     }, function (response){
                         alert("Ha habido un error con el login, intenta volver a acceder!!");
                     }
-            );
-            
-            
-            $http.get("ajax.php?ruta=si").then(
-            function(response){
-                $scope.ruta = "../img/"+response.data.ruta; 
-                $("#imagen").mouseover($scope.getPista);
-                $("#imagen").mouseout($scope.getPregunta);
-            },
-            function(response){
-                $scope.message = "Error:" + response.status +
-                 " " + response.statusText;
-            });
+                ); 
+                $scope.getUserInfo($scope.nick, "info");
+                $http.get("ajax.php?ruta=si").then(
+                    function(response){
+                        $scope.ruta = "../img/"+response.data.ruta; 
+                        $("#imagen").mouseover($scope.getPista);
+                        $("#imagen").mouseout($scope.getPregunta);
+                    },
+                    function(response){
+                        $scope.message = "Error:" + response.status +
+                         " " + response.statusText;
+                    });
+            }
         }
         $scope.getPista = function(){
             $("#imagen").unbind("mouseover");
@@ -87,20 +105,31 @@ app.controller('controlador', ['$scope', 'service', '$http',
         $scope.checkRespuesta = function(value){
             $scope.disabled = false;
             $http.get("ajax.php?respuesta="+value+"").then(
-            function(response){
-                var pos = response.data.posicion;
-                var respuesta = response.data.respuesta;
-                if(respuesta === "acertado"){
-                    $("#"+value).css("color", "#7CFC00");
-                }else if(respuesta == "fallado"){
-                    $("#"+value).css("color", "red");
-                }
-                $scope.disabled = true;
-            },
-            function(response){
-                $scope.message = "Error:" + response.status +
-                 " " + response.statusText;
-            });
+                function(response){
+                    var pos = response.data.posicion;
+                    var respuesta = response.data.respuesta;
+                    if(respuesta === "acertado"){
+                        $("#"+value).css("color", "#7CFC00");
+                        $scope.textoFinal = "Enhorabuena, has acertado";
+                        service.consultaAjax().update({aux: "acertado", nick: $scope.nickInfo, edad:$scope.edadInfo}).$promise.then(
+                            function(response){}, function(response){
+                                alert("Error registrando la puntuación");
+                            }
+                        );
+                    }else if(respuesta == "fallado"){
+                        $("#"+value).css("color", "red");
+                        $scope.textoFinal = "Vaya, has fallado... Vuelve a intentarlo!";
+                        service.consultaAjax().update({aux: "fallado", nick: $scope.nickInfo}).$promise.then(
+                            function(response){}, function(response){
+                                alert("Error registrando la puntuación");
+                            });
+                    }
+                    $scope.disabled = true;
+                },
+                function(response){
+                    $scope.message = "Error:" + response.status +
+                     " " + response.statusText;
+                });
         }
     }
 ]);

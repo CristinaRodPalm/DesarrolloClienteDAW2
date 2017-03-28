@@ -20,6 +20,7 @@ app.controller('controlador', ['$scope', 'service', '$http',
                             $scope.nickInfo = response.nick;
                             $scope.edadInfo = response.edad;
                             $scope.puntuacionInfo = response.puntuacion;
+                            $scope.intentosInfo = response.intentos;
                         }
                         
                     }, function(response){
@@ -52,7 +53,7 @@ app.controller('controlador', ['$scope', 'service', '$http',
                 alert("No puedes empezar a jugar si no te registras");
             }else{
                 $("#infoUser").show();
-                service.consultaAjax().get({aux: "login", nick: $scope.nick, edad:$scope.edad, puntuacion:0}).$promise.then(
+                service.consultaAjax().get({aux: "login", nick: $scope.nick, edad:$scope.edad}).$promise.then(
                     function(response){
                         $("#login").hide();
                         console.log(response);
@@ -106,12 +107,13 @@ app.controller('controlador', ['$scope', 'service', '$http',
             $scope.disabled = false;
             $http.get("ajax.php?respuesta="+value+"").then(
                 function(response){
+                    var user = {nick: $scope.nickInfo, edad: $scope.edadInfo, puntuacion: $scope.puntuacionInfo, intentos: $scope.intentosInfo};
                     var pos = response.data.posicion;
                     var respuesta = response.data.respuesta;
                     if(respuesta === "acertado"){
                         $("#"+value).css("color", "#7CFC00");
                         $scope.textoFinal = "Enhorabuena, has acertado";
-                        service.consultaAjax().update({aux: "acertado", nick: $scope.nickInfo, edad:$scope.edadInfo}).$promise.then(
+                        service.consultaAjax().update({aux: "acertado"}, user).$promise.then(
                             function(response){}, function(response){
                                 alert("Error registrando la puntuación");
                             }
@@ -119,7 +121,7 @@ app.controller('controlador', ['$scope', 'service', '$http',
                     }else if(respuesta == "fallado"){
                         $("#"+value).css("color", "red");
                         $scope.textoFinal = "Vaya, has fallado... Vuelve a intentarlo!";
-                        service.consultaAjax().update({aux: "fallado", nick: $scope.nickInfo}).$promise.then(
+                        service.consultaAjax().update({aux: "fallado"}, user).$promise.then(
                             function(response){}, function(response){
                                 alert("Error registrando la puntuación");
                             });
@@ -130,6 +132,15 @@ app.controller('controlador', ['$scope', 'service', '$http',
                     $scope.message = "Error:" + response.status +
                      " " + response.statusText;
                 });
+        }
+        $scope.deleteUser = function(nick){
+            service.consultaAjax().delete({nick: nick}).$promise.then(
+                    function(response){
+                        console.log(nick);
+                        console.log(response);
+                    }, function(response){
+                        
+                    });
         }
     }
 ]);

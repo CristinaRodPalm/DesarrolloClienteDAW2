@@ -38,18 +38,10 @@
                         <td style="text-align:center">{{nickInfo}}</td>
                         <td style="text-align:center">{{edadInfo}}</td>
                         <td style="text-align:center">{{puntuacionInfo}}</td>
-                        <td style="text-align:center">{{intentos}}</td>
+                        <td style="text-align:center">{{intentosInfo}}</td>
                     </tr>
                 </tbody>
             </table>
-            
-           <!-- <div id="infoUser">
-                Nick: {{nickInfo}}
-                Edad: {{edadInfo}}
-                Puntuacion: {{puntuacionInfo}}
-                Intentos: {{intentos}}
-                Aciertos: {{aciertos}}
-            </div>-->
             
             <div class="row">
                 <button class="btn btn-primary btn-xl" id="showRanking" ng-click="getRanking()">Ranking</button>
@@ -62,13 +54,15 @@
                         <td style="text-align:center"><Strong>Nick</Strong></td>
                         <td style="text-align:center"><Strong>Edad</Strong></td>
                         <td style="text-align:center"><Strong>Puntuación</Strong></td>
+                        <td style="text-align:center"><Strong>Intentos</Strong></td>
                         <td></td>
                     </tr>
                     <tr ng-repeat="user in ranking">
                         <td ng-click="getUserInfo(user.nick,'form')" style="text-decoration:underline">{{user.nick}}</td>
                         <td>{{user.edad}}</td>
                         <td> {{user.puntuacion}}</td>
-                        <td style="color:red" ng-click="deleteUser($index)">Eliminar</td>
+                        <td> {{user.intentos}}</td>
+                        <td style="color:red" ng-click="deleteUser(user.nick)">Eliminar</td>
                     </tr>
                 </tbody>
             </table>

@@ -34,14 +34,7 @@ app.controller('controlador', ['$scope', 'service', '$http',
             $("#showRanking").hide();
             $scope.show = true;
             $scope.noshow = false;
-            service.consultaAjax().get().$promise.then(
-                    function(response){
-                        console.log(response);
-                        $scope.ranking = response;
-                    }, function(response){
-                        alert("Ha habido un error al recibir los usuarios");
-                    }
-            );
+            loadRanking();
         }
         $scope.hideRanking = function(){
             $("#ranking").hide();
@@ -134,13 +127,29 @@ app.controller('controlador', ['$scope', 'service', '$http',
                 });
         }
         $scope.deleteUser = function(nick){
-            service.consultaAjax().delete({nick: nick}).$promise.then(
+            if(nick == $scope.nickInfo){
+                alert("No te puedes eliminar a ti mismo si estás conectado");
+            }else{
+                service.consultaAjax().delete({nick: nick}).$promise.then(
+                        function(response){
+                            console.log(nick);
+                            console.log(response);
+                            // vuelve a cargar el ranking, se actualiza con lo que se ha borrado
+                            loadRanking();
+                        }, function(response){
+                            alert("Error al eliminar el usuario");
+                        });
+            }
+        }
+        function loadRanking(){
+            service.consultaAjax().get().$promise.then(
                     function(response){
-                        console.log(nick);
                         console.log(response);
+                        $scope.ranking = response;
                     }, function(response){
-                        
-                    });
+                        alert("Ha habido un error al recibir los usuarios");
+                    }
+            );
         }
     }
 ]);

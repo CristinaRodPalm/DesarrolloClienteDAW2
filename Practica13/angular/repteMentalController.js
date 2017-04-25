@@ -9,35 +9,6 @@ app.controller('controlador', ['$scope', 'service', '$http',
         $("#hide").hide();
         $("#ranking").hide();
         $("#infoUser").hide();
-        $("#userSearch").hide();
-        
-        $scope.searchUser = function(){
-            var nickInput = $("#nickInput").val();
-            service.consultaAjax().get({aux: "byuser", nick: nickInput}).$promise.then(
-                    function(response){
-                        $("#userSearch").show();
-                        $scope.nickSearch = response.nick;
-                        $scope.edadSearch = response.edad;
-                        $scope.emailSearch = response.email;
-                        $scope.puntuacionSearch = response.puntuacion;
-                        $scope.intentosSearch = response.intentos;
-                        console.log(response);
-                    }, function(response){
-                        alert("Ha habido un error en la búsqueda");
-                    });
-        }
-        
-        $scope.getColor = function(){
-            $http.get("colors.php?colors=si").then(
-                    function(response){
-                        console.log(response.data.color);
-                        $("#getColor").html(response.data.color);
-                    },
-                    function(response){
-                        $scope.message = "Error:" + response.status +
-                         " " + response.statusText;
-                    });
-        }
        
         $scope.getUserInfo = function(nickRanking, posicion){
            service.consultaAjax().get({aux: "byuser", nick: nickRanking}).$promise.then(
@@ -48,7 +19,6 @@ app.controller('controlador', ['$scope', 'service', '$http',
                         }else if(posicion = "info"){
                             $scope.nickInfo = response.nick;
                             $scope.edadInfo = response.edad;
-                            $scope.emailInfo = response.email;
                             $scope.puntuacionInfo = response.puntuacion;
                             $scope.intentosInfo = response.intentos;
                         }
@@ -76,7 +46,7 @@ app.controller('controlador', ['$scope', 'service', '$http',
                 alert("No puedes empezar a jugar si no te registras");
             }else{
                 $("#infoUser").show();
-                service.consultaAjax().get({aux: "login", nick: $scope.nick, edad:$scope.edad, email:$scope.email}).$promise.then(
+                service.consultaAjax().get({aux: "login", nick: $scope.nick, edad:$scope.edad}).$promise.then(
                     function(response){
                         $("#login").hide();
                         console.log(response);
@@ -130,7 +100,7 @@ app.controller('controlador', ['$scope', 'service', '$http',
             $scope.disabled = false;
             $http.get("ajax.php?respuesta="+value+"").then(
                 function(response){
-                    var user = {nick: $scope.nickInfo, edad: $scope.edadInfo, email: $scope.emailInfo, puntuacion: $scope.puntuacionInfo, intentos: $scope.intentosInfo};
+                    var user = {nick: $scope.nickInfo, edad: $scope.edadInfo, puntuacion: $scope.puntuacionInfo, intentos: $scope.intentosInfo};
                     var pos = response.data.posicion;
                     var respuesta = response.data.respuesta;
                     if(respuesta === "acertado"){

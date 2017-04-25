@@ -3,7 +3,7 @@
         //$_SESSION["usuarios"] = array("cristina" => array("nick" => "cristina", "edad" => "3", "puntuacion" => "-1", "intentos" => "7"));
 
     if(!isset($_SESSION["usuarios"])) 
-        $_SESSION["usuarios"] = array("cristina" => array("nick" => "cristina", "edad" => "3", "email" => "cristina@palmer", "puntuacion" => "-1", "intentos" => "7"));
+        $_SESSION["usuarios"] = array("cristina" => array("nick" => "cristina", "edad" => "3", "puntuacion" => "-1", "intentos" => "7"));
     
     else $_SESSION["usuarios"];
     
@@ -18,9 +18,9 @@
                 
                 if($datos[0] == "login"){
                     // datos para el login, si no está se añade
-                    $nick = $datos[1]; $edad = $datos[2]; $email = $datos[3];
+                    $nick = $datos[1]; $edad = $datos[2]; 
                     if(!isset($_SESSION["usuarios"][$nick])){
-                        $nuevoUsuario = array("nick" => $nick, "edad" => $edad, "email" => $email, "puntuacion" => 0, "intentos" => 0);
+                        $nuevoUsuario = array("nick" => $nick, "edad" => $edad, "puntuacion" => 0, "intentos" => 0);
                         $_SESSION["usuarios"][$nick] = $nuevoUsuario;
                     }else{
                         

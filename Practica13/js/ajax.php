@@ -1,6 +1,14 @@
 <?php
     session_start();
     $_SESSION["posicion"] = 0;
+    
+    // EXAMEN
+    if(!isset($_SESSION["aciertos"])){
+        $_SESSION["aciertos"] = 0;
+    }
+    if(!isset($_SESSION["fallos"])){
+        $_SESSION["fallos"] = 0;
+    }
 
     $imgRetos = array("retoMental.png", "retoMental2.jpg");
     $respRetos = array("si", "no");
@@ -20,6 +28,14 @@
         if($respRetos[$_SESSION["posicion"]] == $_GET["respuesta"]){
             $respuesta .= '"respuesta" : "acertado"';
         }
+    }else if(isset($_GET["correcto"])){
+        if($_GET["correcto"] == "si"){
+            $_SESSION["aciertos"] += 1;
+        }else if($_GET["correcto"] == "no"){
+            $_SESSION["fallos"] += 1;
+        }
+        $respuesta .= '"aciertos" :"'.$_SESSION["aciertos"].'", "fallos" :"'.$_SESSION["fallos"].'"' ;
+
     }
     
     $respuesta .= '}';

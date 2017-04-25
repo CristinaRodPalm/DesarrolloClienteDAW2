@@ -12,7 +12,45 @@ window.onload = function(){
     document.getElementById("pistaLbl").style.visibility = "hidden";
     document.getElementById("preguntaLbl").style.visibility = "hidden";
     document.getElementById("respuestasLbl").style.visibility = "hidden";
+    
+    document.getElementById("new").addEventListener("mouseover", randomColor, false);
+    
+    
 }
+// EXAMEN
+function randomColor(){
+    var xmlHttp = new XMLHttpRequest();
+    
+    // url destino + parámetros
+    xmlHttp.open("GET", "colors.php?colors=si", true);
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    // qué hacer con la respuesta, quién recibe
+    xmlHttp.onreadystatechange = function(){
+        // state 4 = completado
+        if(xmlHttp.readyState === 4){
+            var respuestaJSON = JSON.parse(xmlHttp.responseText);
+        
+            var div = document.createElement("div");
+            div.innerHTML = respuestaJSON.color;
+            div.setAttribute("color", respuestaJSON.color);
+            
+            document.getElementById("colores").appendChild(div);
+            
+            div.addEventListener("click", function(){
+                this.nextSibling.style.backgroundColor = this.getAttribute("color");
+            }, false);
+            div.addEventListener("mouseout", function(){
+                 document.getElementById("colores").removeChild(this);
+            }, false);
+            
+        }
+    }
+    // enviar la petición + los datos que queramos
+    xmlHttp.send(null);
+    
+}
+
 function checkRespuesta(){
     var radios = document.getElementById('respuestas');
     
@@ -23,25 +61,44 @@ function checkRespuesta(){
             
             var xmlHttp = new XMLHttpRequest();
     
-            // url destino + parámetros
             xmlHttp.open("GET", "ajax.php?respuesta="+value+"", true);
             xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            // qué hacer con la respuesta, quién recibe
             xmlHttp.onreadystatechange = function(){
             if(xmlHttp.readyState === 4){
                     var respuestaJSON = JSON.parse(xmlHttp.responseText);
+                    var elemento = document.getElementById(value);
                     if(respuestaJSON.respuesta == "acertado"){
-                        document.getElementById(value).style.color = "green";
+                        elemento.style.color = "#2EFE2E";
+                        modificarAciertosFallos("si");
                     }else{
-                        document.getElementById(value).style.color = "red";
+                        elemento.style.color = "red";
+                        modificarAciertosFallos("no");
                     }
+                    
                 }
             }
-            // enviar la petición + los datos que queramos
             xmlHttp.send(null);
         }
     }
+}
+// EXAMEN
+function modificarAciertosFallos(resultado){
+    var xmlHttp = new XMLHttpRequest();
+    
+            xmlHttp.open("GET", "ajax.php?correcto="+resultado+"", true);
+            xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xmlHttp.onreadystatechange = function(){
+            if(xmlHttp.readyState === 4){
+                    var respuestaJSON = JSON.parse(xmlHttp.responseText);
+                    var resultado = document.getElementById("resultado");
+                    resultado.innerHTML += "<strong>RESULTADO</strong><br/>";
+                    resultado.innerHTML += "Aciertos: "+respuestaJSON.aciertos+"<br/>";
+                    resultado.innerHTML += "Fallos: "+respuestaJSON.fallos;
+                }
+            }
+            xmlHttp.send(null);
 }
 
 function ajaxRutaImagen(){

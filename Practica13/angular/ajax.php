@@ -4,10 +4,6 @@
     $imgRetos = array("retoMental.png", "retoMental2.jpg");
     $respRetos = array("si", "no");
     
-    /*
-     * [{url: "", pista: "", pregunta: "", resp: ""}]
-     */
-    
     $respuesta = '{';
   
     if(isset($_GET["ruta"])){

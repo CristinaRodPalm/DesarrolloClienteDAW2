@@ -13,8 +13,38 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>      
     </head>
     <body ng-app="retoMental" ng-controller="controlador">
-        <h1>MEMORY</h1>
+        <h1>MEMORY</h1><br/>
+        
+        <!-- EXAMEN -->
         <div class="container text-center">
+        <button class="btn btn-primary btn-xl" ng-click="getColor()" id="getColor" >OBTÉN COLOR</button>
+        
+        <br/><br/>
+        
+        <button class="btn btn-primary btn-xl" ng-click="searchUser()" id="getColor" >BUSCAR USUARIO</button>
+        <input id="nickInput" type="text" placeholder="Escribe un nick..."/>
+        
+        <table class="table table-bordered" id="userSearch">
+                <tbody>
+                    <tr><td colspan="5" style="text-align: center"><Strong>BÚSQUEDA</Strong></td></tr>
+                    <tr>
+                        <td style="text-align:center"><Strong>Nick</Strong></td>
+                        <td style="text-align:center"><Strong>Edad</Strong></td>
+                        <td style="text-align:center"><Strong>Email</Strong></td>
+                        <td style="text-align:center"><Strong>Puntuación</Strong></td>
+                        <td style="text-align:center"><Strong>Intentos</Strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">{{nickSearch}}</td>
+                        <td style="text-align:center">{{edadSearch}}</td>
+                        <td style="text-align:center">{{emailSearch}}</td>
+                        <td style="text-align:center">{{puntuacionSearch}}</td>
+                        <td style="text-align:center">{{intentosSearch}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+        <br/><br/>
             <!-- LOGIN -->
             <div id="login">
                 <div class="row">
@@ -24,6 +54,9 @@
                     Edad: <input ng-model="edad"/>
                 </div> 
                 <div class="row">
+                    Email: <input ng-model="email"/>
+                </div>
+                <div class="row">
                     <button class="btn btn-primary btn-xl" ng-click="getImagen()">START</button>
                 </div> 
             </div>
@@ -31,16 +64,18 @@
             <!-- INFO USER CONECTADO -->
             <table class="table table-bordered" id="infoUser">
                 <tbody>
-                    <tr><td colspan="4" style="text-align: center"><Strong>TUS DATOS</Strong></td></tr>
+                    <tr><td colspan="5" style="text-align: center"><Strong>TUS DATOS</Strong></td></tr>
                     <tr>
                         <td style="text-align:center"><Strong>Nick</Strong></td>
                         <td style="text-align:center"><Strong>Edad</Strong></td>
+                        <td style="text-align:center"><Strong>Email</Strong></td>
                         <td style="text-align:center"><Strong>Puntuación</Strong></td>
                         <td style="text-align:center"><Strong>Intentos</Strong></td>
                     </tr>
                     <tr>
                         <td style="text-align:center">{{nickInfo}}</td>
                         <td style="text-align:center">{{edadInfo}}</td>
+                        <td style="text-align:center">{{emailInfo}}</td>
                         <td style="text-align:center">{{puntuacionInfo}}</td>
                         <td style="text-align:center">{{intentosInfo}}</td>
                     </tr>
@@ -57,6 +92,7 @@
                     <tr>
                         <td style="text-align:center"><Strong>Nick</Strong></td>
                         <td style="text-align:center"><Strong>Edad</Strong></td>
+                        <td style="text-align:center"><Strong>Email</Strong></td>
                         <td style="text-align:center"><Strong>Puntuación</Strong></td>
                         <td style="text-align:center"><Strong>Intentos</Strong></td>
                         <td></td>
@@ -64,6 +100,7 @@
                     <tr ng-repeat="user in ranking | orderObjectBy:'puntuacion':true">
                         <td ng-click="getUserInfo(user.nick,'form')" style="text-decoration:underline">{{user.nick}}</td>
                         <td>{{user.edad}}</td>
+                        <td>{{user.email}}</td>
                         <td> {{user.puntuacion}}</td>
                         <td> {{user.intentos}}</td>
                         <td style="color:red" ng-click="deleteUser(user.nick)">Eliminar</td>

@@ -12,7 +12,6 @@ window.onload = function(){
             addEventListener("click", crearVentanaNueva, false);
     
     // ej5b -> setTimeOut para mostrar mensaje en ventana.html
-    
     setTimeout(
             function(){
                 var cookie = getCookie("nombre_usuario");
@@ -52,18 +51,18 @@ function objetosPredefinidos(){
     listaPropiedades.innerHTML += "<li>"+Math.random(200)+"</li>";
  
     listaPropiedades.innerHTML += "<Strong>SO del ordenador</Strong>";
-    var OSName = "Unknown";
+    var OS = "";
     var navegador = window.navigator.userAgent;
-    if (navegador.indexOf("Windows NT 10.0")!= -1) OSName="Windows 10";
-    if (navegador.indexOf("Windows NT 6.2") != -1) OSName="Windows 8";
-    if (navegador.indexOf("Windows NT 6.1") != -1) OSName="Windows 7";
+    if (navegador.indexOf("Windows NT 10.0")!= -1) OS="Windows 10";
+    if (navegador.indexOf("Windows NT 6.2") != -1) OS="Windows 8";
+    if (navegador.indexOf("Windows NT 6.1") != -1) OS="Windows 7";
     //if (navegador.indexOf("Windows NT 6.0") != -1) OSName="Windows Vista";
     //if (navegador.indexOf("Windows NT 5.1") != -1) OSName="Windows XP";
     //if (navegador.indexOf("Windows NT 5.0") != -1) OSName="Windows 2000";
-    if (navegador.indexOf("Mac")            != -1) OSName="Mac/iOS";
-    if (navegador.indexOf("X11")            != -1) OSName="UNIX";
-    if (navegador.indexOf("Linux")          != -1) OSName="Linux";
-    listaPropiedades.innerHTML += "<li>"+OSName+"</li>";
+    if (navegador.indexOf("Mac")            != -1) OS="Mac/iOS";
+    //if (navegador.indexOf("X11")            != -1) OSName="UNIX";
+    if (navegador.indexOf("Linux")          != -1) OS="Linux";
+    listaPropiedades.innerHTML += "<li>"+OS+"</li>";
         
     listaPropiedades.innerHTML += "</ul>";
 }
@@ -97,19 +96,11 @@ function crearVentanaNueva(){
         var valor1 = valores.split(",")[0];
         var valor2 = valores.split(",")[1];
     }while(valor1 < 200 || valor1 > 800 || valor2 < 200 || valor2 > 800);
-    /*
-    if(valor1 > valor2){
-        var maximo = valor1;
-        var minimo = valor2;
-    }else{
-        var maximo = valor2;
-        var minimo = valor1;
-    }*/
     
     window.open("http://localhost:8080/ProyDAW2/Practica15/ventana.html", "nuevo", "width="+valor1+", height="+valor2+"");
 }
 
-// PREDEF
+// PREDEF COOKIE
 
 function setCookie(clave, valor, diasexpiracion) {
     var d = new Date();

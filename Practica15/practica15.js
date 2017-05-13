@@ -97,7 +97,13 @@ function crearVentanaNueva(){
         var valor2 = valores.split(",")[1];
     }while(valor1 < 200 || valor1 > 800 || valor2 < 200 || valor2 > 800);
     
-    window.open("http://localhost:8080/ProyDAW2/Practica15/ventana.html", "nuevo", "width="+valor1+", height="+valor2+"");
+    var maximo = Math.max(valor1, valor2);
+    var minimo = Math.min(valor1, valor2);
+    
+    var anchura = Math.random()*(maximo - minimo) + minimo;
+    var altura = Math.random()*(maximo - minimo) + minimo;
+    
+    window.open("ventana.html", "nuevo", "width="+anchura+", height="+altura+"");
 }
 
 // PREDEF COOKIE
@@ -119,3 +125,4 @@ function getCookie(clave) {
     }
     return "";
 }
+

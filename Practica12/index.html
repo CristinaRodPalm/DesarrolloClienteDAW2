@@ -14,34 +14,35 @@
     <!-- <body ng-app="appEquipos" ng-controller="controller"> -->
     <body ng-app="appPkm" ng-controller="controllerPkm">
         <h1>POKÉMON</h1>
-        
+
         <div class="container">
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <td>
                             <strong>Nom </strong>
-                            <input type="text"/> 
+                            <input type="text" ng-model="nom"/> 
                         </td>
                         <td>
                             <strong>Nick </strong>
-                            <input type="text"/> 
+                            <input type="text" ng-model="nick"/> 
                         </td>
                         <td>
                             <strong>Evolució </strong>
-                            <input type="text"/> 
+                            <input type="text" ng-model="evolucio"/> 
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align:center">
                             <strong>Tipus </strong>
-                            <input type="text" /> 
+                            <input type="text" ng-model="tipus"/> 
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="text-align:center">
-                            <div class="btn btn-info col-lg-1" ng-click="addEditPkm()"/>Afegir/modificar pokémon
+                        <td colspan="3">
+                            <button class="btn btn-success" ng-click="addEditPkm()">Add/Edit pokemon</button>
                         </td>
+
                     </tr>
                 </tbody> 
             </table>
@@ -62,9 +63,9 @@
                     
                 </tbody> 
             </table>
-           -->
+            -->
             <table class="table table-bordered">
-               <tbody>
+                <tbody>
                     <tr>
                         <td><strong>Nombre</strong></td>
                         <td><strong>Nickname</strong></td>
@@ -74,10 +75,10 @@
                     </tr>
                     <tr ng-repeat="pkm in pokemon">
                         <td>{{pkm.nombre}}</td>
-                        <td>{{pkm.nick}}</td> 
+                        <td ng-click="llenarFormulario(pkm)">{{pkm.nick}}</td> 
                         <td>{{pkm.evolucion}}</td>
                         <td>{{pkm.tipo}}</td>
-                        <td ng-click="eliminar()" style="color:red">Elimina</td>
+                        <td><button class='btn btn-danger' ng-click="eliminar(pkm)">Eliminar</button></td>
                     </tr>
                 </tbody>
             </table>

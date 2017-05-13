@@ -24,10 +24,19 @@
         $respuesta .= '"pregunta": "¿Hay alguna imagen pareja a otra?"';
     }else if(isset($_GET["pista"])){
          $respuesta .= '"pista" : "Fíjate bien si son iguales..."';
+         
+         
+         
+        
     }else if(isset($_GET["respuesta"])){
         if($respRetos[$_SESSION["posicion"]] == $_GET["respuesta"]){
             $respuesta .= '"respuesta" : "acertado"';
         }
+        
+        
+        
+        
+        
     }else if(isset($_GET["correcto"])){
         if($_GET["correcto"] == "si"){
             $_SESSION["aciertos"] += 1;

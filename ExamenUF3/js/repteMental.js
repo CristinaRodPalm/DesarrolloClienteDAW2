@@ -60,24 +60,24 @@ function checkRespuesta(){
             var value = radios[i].value;
             
             var xmlHttp = new XMLHttpRequest();
-    
+            
             xmlHttp.open("GET", "ajax.php?respuesta="+value+"", true);
             xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
             xmlHttp.onreadystatechange = function(){
-            if(xmlHttp.readyState === 4){
-                    var respuestaJSON = JSON.parse(xmlHttp.responseText);
-                    var elemento = document.getElementById(value);
-                    if(respuestaJSON.respuesta == "acertado"){
-                        elemento.style.color = "#2EFE2E";
-                        modificarAciertosFallos("si");
-                    }else{
-                        elemento.style.color = "red";
-                        modificarAciertosFallos("no");
+                if(xmlHttp.readyState === 4){
+                        var respuestaJSON = JSON.parse(xmlHttp.responseText);
+                        var elemento = document.getElementById(value);
+                        if(respuestaJSON.respuesta == "acertado"){
+                            elemento.style.color = "#2EFE2E";
+                            modificarAciertosFallos("si");
+                        }else{
+                            elemento.style.color = "red";
+                            modificarAciertosFallos("no");
+                        }
+
                     }
-                    
                 }
-            }
             xmlHttp.send(null);
         }
     }
